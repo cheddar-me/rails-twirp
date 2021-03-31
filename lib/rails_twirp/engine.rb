@@ -22,7 +22,7 @@ module RailsTwirp
       app.config.paths.add "config/twirp/routes.rb"
       app.config.paths.add "config/twirp/routes", glob: "**/*.rb"
       app.config.paths.add "app/twirp/controllers", eager_load: true
-      app.config.paths.add "app/twirp/proto", load_path: true
+      app.config.paths.add "proto", load_path: true
       app.config.paths.add "app/twirp/views", load_path: true
     end
 
