@@ -1,5 +1,6 @@
-require "rails/railtie"
 require "rails_twirp/application"
+require "rails_twirp/route_set"
+require "rails/railtie"
 
 module RailsTwirp
   # Even though this is an engine, we don't inherit from Rails::Engine because we don't want anything it provides.
@@ -37,11 +38,12 @@ module RailsTwirp
 
     initializer :load_twirp_routes do |app|
       # Load route files
-      route_configs = [
+      [
         *app.config.paths["config/twirp/routes.rb"].existent,
         *app.config.paths["config/twirp/routes"].existent
-      ]
-      load(*route_configs)
+      ].each do |path|
+        load path
+      end
 
       # Create a router that knows how to route all the registered services
       services = app.twirp.routes.to_services

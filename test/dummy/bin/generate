@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+protoc --twirp_ruby_out=proto/ --ruby_out=proto/ -I proto/ proto/api.proto
