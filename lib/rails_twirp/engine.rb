@@ -27,8 +27,11 @@ module RailsTwirp
       app.config.paths.add "app/twirp/views", load_path: true
     end
 
-    initializer :set_controller_view_path do
-      ActiveSupport.on_load(:rails_twirp) { prepend_view_path "app/twirp/views" }
+    initializer :set_controller_view_path do |app|
+      views = app.config.paths["app/twirp/views"].existent
+      unless views.empty?
+        ActiveSupport.on_load(:rails_twirp) { prepend_view_path views }
+      end
     end
 
     initializer :add_twirp do |app|
