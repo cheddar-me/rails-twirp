@@ -8,6 +8,11 @@ module RPC
       package 'dummy.api'
       service 'Dummy'
       rpc :Ping, PingRequest, PingResponse, :ruby_method => :ping
+      rpc :PingRender, PingRequest, PingResponse, :ruby_method => :ping_render
+      rpc :PingTemplate, PingRequest, PingResponse, :ruby_method => :ping_template
+      rpc :ErrorResponse, PingRequest, PingResponse, :ruby_method => :error_response
+      rpc :RaiseError, PingRequest, PingResponse, :ruby_method => :raise_error
+      rpc :BeforeError, PingRequest, PingResponse, :ruby_method => :before_error
     end
 
     class DummyClient < Twirp::Client

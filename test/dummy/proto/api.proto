@@ -6,6 +6,11 @@ package dummy.api;
 
 service Dummy {
   rpc Ping(PingRequest) returns (PingResponse);
+  rpc PingRender(PingRequest) returns (PingResponse);
+  rpc PingTemplate(PingRequest) returns (PingResponse);
+  rpc ErrorResponse(PingRequest) returns (PingResponse);
+  rpc RaiseError(PingRequest) returns (PingResponse);
+  rpc BeforeError(PingRequest) returns (PingResponse);
 }
 
 message PingRequest {
