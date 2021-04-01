@@ -16,3 +16,6 @@ jobs:
 
       - name: Run tests
         run: bin/test
+
+      - name: Run standardrb
+        run: bundle exec standardrb

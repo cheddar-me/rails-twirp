@@ -5,3 +5,4 @@ gemspec
 
 gem "sqlite3"
 gem "pbbuilder", "~> 0.3.0"
+gem "standard"
