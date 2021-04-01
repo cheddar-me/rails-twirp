@@ -10,6 +10,7 @@ service Dummy {
   rpc PingTemplate(PingRequest) returns (PingResponse);
   rpc ErrorResponse(PingRequest) returns (PingResponse);
   rpc RaiseError(PingRequest) returns (PingResponse);
+  rpc UncaughtError(PingRequest) returns (PingResponse);
   rpc BeforeError(PingRequest) returns (PingResponse);
 }
 

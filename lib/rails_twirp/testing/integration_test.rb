@@ -30,7 +30,12 @@ module RailsTwirp
         hook.call(env)
       end
 
-      response = service.call_rpc rpc, request, env
+      response = begin
+        service.call_rpc rpc, request, env
+      rescue => e
+        Twirp::Error.internal_with(e)
+      end
+
       @response = response
       @controller = http_request.controller_instance
       response

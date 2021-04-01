@@ -7,6 +7,7 @@ Rails.application.twirp.routes.draw do
     rpc "PingTemplate", to: "pings#ping_template"
     rpc "ErrorResponse", to: "pings#error_response"
     rpc "RaiseError", to: "pings#raise_error"
+    rpc "UncaughtError", to: "pings#uncaught_raise"
     rpc "BeforeError", to: "pings#before_error"
   end
 end

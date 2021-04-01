@@ -12,6 +12,7 @@ module RPC
       rpc :PingTemplate, PingRequest, PingResponse, :ruby_method => :ping_template
       rpc :ErrorResponse, PingRequest, PingResponse, :ruby_method => :error_response
       rpc :RaiseError, PingRequest, PingResponse, :ruby_method => :raise_error
+      rpc :UncaughtError, PingRequest, PingResponse, :ruby_method => :uncaught_error
       rpc :BeforeError, PingRequest, PingResponse, :ruby_method => :before_error
     end
 

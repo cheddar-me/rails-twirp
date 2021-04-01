@@ -24,6 +24,10 @@ class PingsController < ApplicationTwirpController
     raise ActiveRecord::RecordNotFound, "Not found"
   end
 
+  def uncaught_raise
+    raise StandardError, "Uncaught"
+  end
+
   def before_error
     # This error won't be reached because of the before_action
     raise NotImplementedError
