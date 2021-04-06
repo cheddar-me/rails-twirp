@@ -1,0 +1,4 @@
+ignore:
+  - 'test/dummy/proto/*'
+  - '**/*':
+    - Lint/RescueException

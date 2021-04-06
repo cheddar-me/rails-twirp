@@ -1,6 +1,8 @@
 # Most of this logic is stolen from Rails ActionDispatch::Routing::RouteSet
 
 module RailsTwirp
+  class UnknownRpcError < StandardError; end
+
   class RouteSet
     attr_reader :services
 
@@ -42,6 +44,7 @@ module RailsTwirp
         handler = Class.new
         @rpcs.each do |name, mapping|
           rpc_info = @service_class.rpcs[name]
+          raise UnknownRpcError, "Unknown RPC #{name} on #{@service_class.service_name} service" unless rpc_info
           method_name = rpc_info[:ruby_method]
 
           # Stolen from Rails in ActionDispatch::Request#controller_class_for

@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+option ruby_package = "RPC::DummyAPI";
+
+package dummy.api;
+
+service Dummy {
+  rpc Ping(PingRequest) returns (PingResponse);
+  rpc PingRender(PingRequest) returns (PingResponse);
+  rpc PingTemplate(PingRequest) returns (PingResponse);
+  rpc ErrorResponse(PingRequest) returns (PingResponse);
+  rpc RaiseError(PingRequest) returns (PingResponse);
+  rpc UncaughtError(PingRequest) returns (PingResponse);
+  rpc BeforeError(PingRequest) returns (PingResponse);
+}
+
+message PingRequest {
+  string name = 1;
+}
+
+message PingResponse {
+  string double_name = 2;
+}

@@ -1,0 +1,21 @@
+name: Ruby Test
+on: push
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.0.0
+          bundler-cache: true
+
+      - name: Run tests
+        run: bin/test
+
+      - name: Run standardrb
+        run: bundle exec standardrb

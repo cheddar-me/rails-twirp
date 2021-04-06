@@ -1,13 +1,33 @@
+require "abstract_controller/base"
+require "abstract_controller/rendering"
+require "action_view/rendering"
+require "rails_twirp/render_pb"
+require "rails_twirp/errors"
+require "abstract_controller/asset_paths"
+require "abstract_controller/caching"
+require "abstract_controller/logger"
+require "abstract_controller/callbacks"
+require "rails_twirp/rescue"
+
 module RailsTwirp
   class Base < AbstractController::Base
     abstract!
 
-    include AbstractController::Logger
-    include AbstractController::AssetPaths
-    include AbstractController::Callbacks
-    include AbstractController::Caching
+    # The order of these includes matter.
+    # The rendering modules extend each other, so need to be in this order.
     include AbstractController::Rendering
     include ActionView::Rendering
+    include RenderPb
+    include Errors
+
+    # These add helpers for the controller
+    include AbstractController::AssetPaths
+    include AbstractController::Caching
+    include AbstractController::Logger
+
+    # These need to be last so errors can be handled as early as possible.
+    include AbstractController::Callbacks
+    include Rescue
 
     attr_internal :request, :env, :response_class
     def initialize
@@ -35,14 +55,13 @@ module RailsTwirp
       response_body
     end
 
-    def render(*args)
-      options = {formats: :pb, handlers: :pbbuilder, locals: {response_class: response_class}}
-      options.deep_merge! args.extract_options!
-      super(*args, options)
-    end
-
     def self.dispatch(action, request, response_class, env = {})
       new.dispatch(action, request, response_class, env)
+    end
+
+    # Used by the template renderer to figure out which template to use
+    def details_for_lookup
+      {formats: [:pb], handlers: [:pbbuilder]}
     end
 
     ActiveSupport.run_load_hooks(:rails_twirp, self)
