@@ -21,7 +21,9 @@ module RailsTwirp
       @request = request
       service = app.twirp.routes.services[service].to_service
 
-      rack_env = {}
+      rack_env = {
+        "HTTP_HOST" => "localhost"
+      }
       http_request = ActionDispatch::Request.new(rack_env)
       http_request.headers.merge! headers if headers.present?
       env = {rack_env: rack_env}

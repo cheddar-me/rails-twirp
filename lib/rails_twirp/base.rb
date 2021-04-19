@@ -7,7 +7,9 @@ require "abstract_controller/asset_paths"
 require "abstract_controller/caching"
 require "abstract_controller/logger"
 require "abstract_controller/callbacks"
+require "action_controller/metal/helpers"
 require "rails_twirp/rescue"
+require "rails_twirp/url_for"
 
 module RailsTwirp
   class Base < AbstractController::Base
@@ -16,14 +18,17 @@ module RailsTwirp
     # The order of these includes matter.
     # The rendering modules extend each other, so need to be in this order.
     include AbstractController::Rendering
-    include ActionView::Rendering
-    include RenderPb
-    include Errors
 
     # These add helpers for the controller
+    include ActionController::Helpers
+    include UrlFor
     include AbstractController::AssetPaths
     include AbstractController::Caching
     include AbstractController::Logger
+
+    include ActionView::Rendering
+    include RenderPb
+    include Errors
 
     # These need to be last so errors can be handled as early as possible.
     include AbstractController::Callbacks

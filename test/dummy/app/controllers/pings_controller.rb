@@ -7,7 +7,8 @@ class PingsController < ApplicationTwirpController
   end
 
   def ping_render
-    response = RPC::DummyAPI::PingResponse.new(double_name: request.name * 2)
+    url = rails_twirp_engine_url
+    response = RPC::DummyAPI::PingResponse.new(double_name: "#{url} #{helpers.does_this_work(request.name)}")
     render pb: response
   end
 
