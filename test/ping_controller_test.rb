@@ -11,7 +11,7 @@ class PingControllerTest < RailsTwirp::IntegrationTest
     req = RPC::DummyAPI::PingRequest.new(name: "Bouke")
     rpc RPC::DummyAPI::DummyService, "PingRender", req
     refute_instance_of Twirp::Error, response
-    assert_equal "BoukeBouke", response.double_name
+    assert_equal "http://localhost/twirp BoukeBouke", response.double_name
   end
 
   test "you can ping template" do

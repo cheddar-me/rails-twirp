@@ -34,6 +34,23 @@ module RailsTwirp
       end
     end
 
+    initializer "rails_twirp.helpers" do |app|
+      ActiveSupport.on_load(:rails_twirp) do
+        # Load all the application helpers into the controller
+        include app.routes.mounted_helpers
+        extend ::AbstractController::Railties::RoutesHelpers.with(app.routes, false)
+        extend ::ActionController::Railties::Helpers
+        define_singleton_method(:inherited) do |klass|
+          super(klass)
+
+          # Have to call this explicitely, because ::ActionController::Railties::Helpers
+          # checks if ActionController::Base is a parent class, which it isn't.
+          # If we don't call this, the helpers don't get loaded
+          klass.helper :all
+        end
+      end
+    end
+
     initializer :add_twirp do |app|
       # Here we add the 'twirp' method to application, which is accessible at Rails.application.twirp
       app.extend TwirpValue
