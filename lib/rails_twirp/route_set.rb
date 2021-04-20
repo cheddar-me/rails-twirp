@@ -1,5 +1,7 @@
 # Most of this logic is stolen from Rails ActionDispatch::Routing::RouteSet
 
+require "rails_twirp/mapper"
+
 module RailsTwirp
   class UnknownRpcError < StandardError; end
 
@@ -64,52 +66,6 @@ module RailsTwirp
           env[:rack_env] = rack_env
         end
         service
-      end
-    end
-
-    class Mapping
-      attr_reader :controller, :action
-
-      def initialize(to:)
-        @controller, @action = split_to(to)
-      end
-
-      def to_s
-        "#{controller}##{action}"
-      end
-
-      private
-
-      # copied from Rails
-      def split_to(to)
-        if /#/.match?(to)
-          to.split("#").map!(&:-@)
-        else
-          []
-        end
-      end
-    end
-
-    class ServiceMapper
-      def initialize(service_route_set)
-        @service_route_set = service_route_set
-      end
-
-      def rpc(name, to:)
-        mapping = Mapping.new(to: to)
-        @service_route_set.add_route(name, mapping)
-      end
-    end
-
-    class Mapper
-      def initialize(route_set)
-        @route_set = route_set
-      end
-
-      def service(service_definition, &block)
-        service_route_set = @route_set.services[service_definition]
-        service_mapper = ServiceMapper.new(service_route_set)
-        service_mapper.instance_exec(&block)
       end
     end
   end

@@ -12,6 +12,7 @@ service Dummy {
   rpc RaiseError(PingRequest) returns (PingResponse);
   rpc UncaughtError(PingRequest) returns (PingResponse);
   rpc BeforeError(PingRequest) returns (PingResponse);
+  rpc Nested(PingRequest) returns (PingResponse);
 }
 
 message PingRequest {

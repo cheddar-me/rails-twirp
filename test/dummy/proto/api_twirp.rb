@@ -14,6 +14,7 @@ module RPC
       rpc :RaiseError, PingRequest, PingResponse, :ruby_method => :raise_error
       rpc :UncaughtError, PingRequest, PingResponse, :ruby_method => :uncaught_error
       rpc :BeforeError, PingRequest, PingResponse, :ruby_method => :before_error
+      rpc :Nested, PingRequest, PingResponse, :ruby_method => :nested
     end
 
     class DummyClient < Twirp::Client

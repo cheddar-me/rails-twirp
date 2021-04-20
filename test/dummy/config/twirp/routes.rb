@@ -10,4 +10,12 @@ Rails.application.twirp.routes.draw do
     rpc "UncaughtError", to: "pings#uncaught_raise"
     rpc "BeforeError", to: "pings#before_error"
   end
+
+  scope module: :testmod do
+    service RPC::DummyAPI::DummyService do
+      scope module: "nested" do
+        rpc "Nested", to: "other#ping"
+      end
+    end
+  end
 end
