@@ -15,20 +15,18 @@ module RailsTwirp
     end
 
     initializer "rails_twirp.logger" do
-      # This hook is called whenever a RailsTwirp::Base is initialized, and it sets the logger
+      # This hook is called when RailsTwirp::Base is initialized, and it sets the logger
       ActiveSupport.on_load(:rails_twirp) { self.logger ||= Rails.logger }
     end
 
     initializer :add_paths, before: :bootstrap_hook do |app|
       app.config.paths.add "config/twirp/routes.rb"
       app.config.paths.add "config/twirp/routes", glob: "**/*.rb"
-      app.config.paths.add "app/twirp/controllers", eager_load: true
       app.config.paths.add "proto", load_path: true
-      app.config.paths.add "app/twirp/views", load_path: true
     end
 
     initializer :set_controller_view_path do |app|
-      views = app.config.paths["app/twirp/views"].existent
+      views = app.config.paths["app/views"].existent
       unless views.empty?
         ActiveSupport.on_load(:rails_twirp) { prepend_view_path views }
       end
