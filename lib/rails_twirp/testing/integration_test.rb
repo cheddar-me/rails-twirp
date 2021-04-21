@@ -5,6 +5,7 @@ module RailsTwirp
     Response = Struct.new(:status, :body, :headers)
 
     attr_reader :response, :request, :controller
+    attr_writer :mount_path
 
     def initialize(name)
       super
@@ -20,10 +21,6 @@ module RailsTwirp
 
     def before_rpc(&block)
       @before_rpc << block
-    end
-
-    def mount_path(path)
-      @mount_path = path
     end
 
     def rpc(svc, rpc, request, headers: nil)
