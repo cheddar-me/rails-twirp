@@ -10,6 +10,7 @@ require "abstract_controller/callbacks"
 require "action_controller/metal/helpers"
 require "rails_twirp/rescue"
 require "rails_twirp/url_for"
+require "rails_twirp/implicit_render"
 
 module RailsTwirp
   class Base < AbstractController::Base
@@ -29,6 +30,7 @@ module RailsTwirp
     include ActionView::Rendering
     include RenderPb
     include Errors
+    include ImplicitRender
 
     # These need to be last so errors can be handled as early as possible.
     include AbstractController::Callbacks
@@ -55,8 +57,6 @@ module RailsTwirp
 
       process(action)
 
-      # Implicit render
-      self.response_body = render unless response_body
       response_body
     end
 
