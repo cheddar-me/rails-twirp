@@ -23,42 +23,61 @@ module RailsTwirp
       @before_rpc << block
     end
 
-    def rpc(svc, rpc, request, headers: nil)
+    def rpc(service, rpc, request, headers: nil)
       @request = request
-      input_class = svc.rpcs[rpc][:input_class]
-      output_class = svc.rpcs[rpc][:output_class]
 
-      content_type = Twirp::Encoding::PROTO
-      env = {
-        "CONTENT_TYPE" => content_type,
-        "HTTP_HOST" => "localhost",
-        "PATH_INFO" => "#{@mount_path}/#{svc.service_full_name}/#{rpc}",
-        "REQUEST_METHOD" => "POST"
-      }
-      http_request = ActionDispatch::Request.new(env)
-      http_request.headers.merge! headers if headers.present?
-
-      env["rack.input"] = StringIO.new(Twirp::Encoding.encode(request, input_class, content_type))
-
+      env = build_rack_env(service, rpc, request, headers)
       @before_rpc.each do |hook|
         hook.call(env)
       end
 
       status, headers, body = app.call(env)
-      body = body.join
-      response = if status === 200
-        Twirp::Encoding.decode(body, output_class, headers["Content-Type"])
-      else
-        Twirp::Client.error_from_response(Response.new(status, body, headers))
-      end
+      @response = decode_rack_response(service, rpc, status, headers, body)
+      set_controller_from_rack_env(env)
 
-      @response = response
-      @controller = http_request.controller_instance
-      response
+      @response
     end
 
     def app
       RailsTwirp.test_app
+    end
+
+    private
+
+    def build_rack_env(service, rpc, request, headers)
+      env = {
+        "CONTENT_TYPE" => request_content_type,
+        "HTTP_HOST" => "localhost",
+        "PATH_INFO" => "#{@mount_path}/#{service.service_full_name}/#{rpc}",
+        "REQUEST_METHOD" => "POST"
+      }
+      if headers.present?
+        http_request = ActionDispatch::Request.new(env)
+        http_request.headers.merge! headers
+      end
+
+      input_class = service.rpcs[rpc][:input_class]
+      env["rack.input"] = StringIO.new(Twirp::Encoding.encode(request, input_class, request_content_type))
+      env
+    end
+
+    def request_content_type
+      Twirp::Encoding::PROTO
+    end
+
+    def decode_rack_response(service, rpc, status, headers, body)
+      body = body.join # body is an Enumerable
+
+      if status === 200
+        output_class = service.rpcs[rpc][:output_class]
+        Twirp::Encoding.decode(body, output_class, headers["Content-Type"])
+      else
+        Twirp::Client.error_from_response(Response.new(status, body, headers))
+      end
+    end
+
+    def set_controller_from_rack_env(env)
+      @controller = ActionDispatch::Request.new(env).controller_class
     end
   end
 end
