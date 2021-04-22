@@ -2,21 +2,40 @@ require "twirp/encoding"
 
 module RailsTwirp
   class IntegrationTest < ActiveSupport::TestCase
+    DEFAULT_HOST = "www.example.com"
     Response = Struct.new(:status, :body, :headers)
 
     attr_reader :response, :request, :controller
     attr_writer :mount_path
+    alias :mount_path! :mount_path=
 
     def initialize(name)
       super
       reset!
       @before_rpc = []
-      @mount_path = "/twirp"
+    end
+
+    def host
+      @host || DEFAULT_HOST
+    end
+    attr_writer :host
+    alias :host! :host=
+
+    def https?
+      @https
+    end
+
+    def https!(value = true)
+      @https = value
     end
 
     def reset!
       @request = nil
       @response = nil
+      @host = nil
+      @host = nil
+      @https = false
+      @mount_path = "/twirp"
     end
 
     def before_rpc(&block)
@@ -47,9 +66,13 @@ module RailsTwirp
     def build_rack_env(service, rpc, request, headers)
       env = {
         "CONTENT_TYPE" => request_content_type,
-        "HTTP_HOST" => "localhost",
+        "HTTPS" => https? ? "on" : "off",
+        "HTTP_HOST" => host,
         "PATH_INFO" => "#{@mount_path}/#{service.service_full_name}/#{rpc}",
-        "REQUEST_METHOD" => "POST"
+        "REQUEST_METHOD" => "POST",
+        "SERVER_NAME" => host,
+        "SERVER_PORT" => https? ? "443" : "80",
+        "rack.url_scheme" => https? ? "https" : "http"
       }
       if headers.present?
         http_request = ActionDispatch::Request.new(env)
