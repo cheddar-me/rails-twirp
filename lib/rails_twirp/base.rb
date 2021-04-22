@@ -11,6 +11,7 @@ require "action_controller/metal/helpers"
 require "rails_twirp/rescue"
 require "rails_twirp/url_for"
 require "rails_twirp/implicit_render"
+require "rails_twirp/instrumentation"
 
 module RailsTwirp
   class Base < AbstractController::Base
@@ -25,7 +26,6 @@ module RailsTwirp
     include UrlFor
     include AbstractController::AssetPaths
     include AbstractController::Caching
-    include AbstractController::Logger
 
     include ActionView::Rendering
     include RenderPb
@@ -35,6 +35,7 @@ module RailsTwirp
     # These need to be last so errors can be handled as early as possible.
     include AbstractController::Callbacks
     include Rescue
+    include Instrumentation
 
     attr_internal :request, :env, :response_class
     def initialize
