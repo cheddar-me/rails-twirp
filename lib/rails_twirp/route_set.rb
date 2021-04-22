@@ -50,12 +50,12 @@ module RailsTwirp
           method_name = rpc_info[:ruby_method]
 
           # Stolen from Rails in ActionDispatch::Request#controller_class_for
-          controller_name = mapping.controller.underscore
-          const_name = controller_name.camelize << "Controller"
           action_name = mapping.action
           response_class = rpc_info[:output_class]
 
           handler.define_method(method_name) do |req, env|
+            controller_name = mapping.controller.underscore
+            const_name = controller_name.camelize << "Controller"
             controller_class = ::ActiveSupport::Dependencies.constantize(const_name)
             controller_class.dispatch(action_name, req, response_class, env)
           end
