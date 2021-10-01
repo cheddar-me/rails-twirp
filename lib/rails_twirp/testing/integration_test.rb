@@ -7,7 +7,7 @@ module RailsTwirp
 
     attr_reader :response, :request, :controller
     attr_writer :mount_path
-    alias :mount_path! :mount_path=
+    alias_method :mount_path!, :mount_path=
 
     def initialize(name)
       super
@@ -19,7 +19,7 @@ module RailsTwirp
       @host || DEFAULT_HOST
     end
     attr_writer :host
-    alias :host! :host=
+    alias_method :host!, :host=
 
     def https?
       @https
