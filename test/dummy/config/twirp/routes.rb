@@ -1,4 +1,4 @@
-require "api_twirp"
+require_relative "../../proto/api_twirp"
 
 Rails.application.twirp.routes.draw do
   service RPC::DummyAPI::DummyService do

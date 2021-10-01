@@ -56,7 +56,7 @@ module RailsTwirp
           handler.define_method(method_name) do |req, env|
             controller_name = mapping.controller.underscore
             const_name = controller_name.camelize << "Controller"
-            controller_class = ::ActiveSupport::Dependencies.constantize(const_name)
+            controller_class = const_name.constantize
             controller_class.dispatch(action_name, req, response_class, env)
           end
         end
