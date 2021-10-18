@@ -17,7 +17,9 @@ module RailsTwirp
       info do
         code = payload.fetch(:code, :internal)
 
-        message = +"Completed #{code} in #{event.duration.round}ms (Allocations: #{event.allocations})"
+        message = +"Completed #{code}"
+        message << ": #{payload[:msg]}" if payload[:msg]
+        message << " in #{event.duration.round}ms (Allocations: #{event.allocations})"
         message << "\n\n" if defined?(Rails.env) && Rails.env.development?
 
         message
