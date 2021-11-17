@@ -57,7 +57,7 @@ module RailsTwirp
             controller_name = mapping.controller.underscore
             const_name = controller_name.camelize << "Controller"
             controller_class = const_name.constantize
-            controller_class.dispatch(action_name, req, response_class, env)
+            controller_class.dispatch(action_name, req, response_class, env, name)
           end
         end
 

@@ -37,7 +37,7 @@ module RailsTwirp
     include Rescue
     include Instrumentation
 
-    attr_internal :request, :env, :response_class
+    attr_internal :request, :env, :response_class, :rpc_name
     def initialize
       @_request = nil
       @_env = nil
@@ -49,10 +49,11 @@ module RailsTwirp
       @_http_request ||= ActionDispatch::Request.new(env[:rack_env])
     end
 
-    def dispatch(action, request, response_class, env = {})
+    def dispatch(action, request, response_class, env = {}, rpc_name)
       self.request = request
       self.env = env
       self.response_class = response_class
+      self.rpc_name = rpc_name
 
       http_request.controller_instance = self
 
@@ -61,8 +62,8 @@ module RailsTwirp
       response_body
     end
 
-    def self.dispatch(action, request, response_class, env = {})
-      new.dispatch(action, request, response_class, env)
+    def self.dispatch(action, request, response_class, env = {}, rpc_name)
+      new.dispatch(action, request, response_class, env, rpc_name)
     end
 
     # Used by the template renderer to figure out which template to use
