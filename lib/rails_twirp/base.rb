@@ -49,7 +49,7 @@ module RailsTwirp
       @_http_request ||= ActionDispatch::Request.new(env[:rack_env])
     end
 
-    def dispatch(action, request, response_class, env = {}, rpc_name)
+    def dispatch(action, request, response_class, rpc_name, env = {})
       self.request = request
       self.env = env
       self.response_class = response_class
@@ -62,8 +62,8 @@ module RailsTwirp
       response_body
     end
 
-    def self.dispatch(action, request, response_class, env = {}, rpc_name)
-      new.dispatch(action, request, response_class, env, rpc_name)
+    def self.dispatch(action, request, response_class, rpc_name, env = {})
+      new.dispatch(action, request, response_class, rpc_name, env)
     end
 
     # Used by the template renderer to figure out which template to use
