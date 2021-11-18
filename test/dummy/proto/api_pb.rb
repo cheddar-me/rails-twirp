@@ -11,6 +11,11 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     add_message "dummy.api.PingResponse" do
       optional :double_name, :string, 2
     end
+    add_message "dummy.api.RpcNameCheckRequest" do
+    end
+    add_message "dummy.api.RpcNameCheckResponse" do
+      optional :rpc_name, :string, 1
+    end
   end
 end
 
@@ -18,5 +23,7 @@ module RPC
   module DummyAPI
     PingRequest = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("dummy.api.PingRequest").msgclass
     PingResponse = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("dummy.api.PingResponse").msgclass
+    RpcNameCheckRequest = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("dummy.api.RpcNameCheckRequest").msgclass
+    RpcNameCheckResponse = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("dummy.api.RpcNameCheckResponse").msgclass
   end
 end

@@ -13,6 +13,7 @@ service Dummy {
   rpc UncaughtError(PingRequest) returns (PingResponse);
   rpc BeforeError(PingRequest) returns (PingResponse);
   rpc Nested(PingRequest) returns (PingResponse);
+  rpc RpcNameCheck(RpcNameCheckRequest) returns (RpcNameCheckResponse);
 }
 
 message PingRequest {
@@ -21,4 +22,9 @@ message PingRequest {
 
 message PingResponse {
   string double_name = 2;
+}
+
+message RpcNameCheckRequest{}
+message RpcNameCheckResponse{
+  string rpc_name = 1;
 }

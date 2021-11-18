@@ -9,6 +9,7 @@ Rails.application.twirp.routes.draw do
     rpc "RaiseError", to: "pings#raise_error"
     rpc "UncaughtError", to: "pings#uncaught_raise"
     rpc "BeforeError", to: "pings#before_error"
+    rpc "RpcNameCheck", to: "dummy#rpc_name_check"
   end
 
   scope module: :testmod do
