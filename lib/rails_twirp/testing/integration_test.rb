@@ -100,7 +100,7 @@ module RailsTwirp
     end
 
     def set_controller_from_rack_env(env)
-      @controller = ActionDispatch::Request.new(env).controller_class
+      @controller = ActionDispatch::Request.new(env).controller_instance
     end
   end
 end
