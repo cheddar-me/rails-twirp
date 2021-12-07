@@ -61,4 +61,10 @@ class PingControllerTest < RailsTwirp::IntegrationTest
     assert_equal "yOuR ReQuEsT Is mAlFoRmEd", response.msg
     assert_equal :malformed, response.code
   end
+
+  test "controller is set to the controller that handled the request" do
+    req = RPC::DummyAPI::PingRequest.new(name: "Bouke")
+    rpc RPC::DummyAPI::DummyService, "Ping", req
+    assert_instance_of PingsController, controller
+  end
 end
