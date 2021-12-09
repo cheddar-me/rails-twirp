@@ -12,6 +12,7 @@ require "rails_twirp/rescue"
 require "rails_twirp/url_for"
 require "rails_twirp/implicit_render"
 require "rails_twirp/instrumentation"
+require "rails_twirp/exception_handling"
 
 module RailsTwirp
   class Base < AbstractController::Base
@@ -36,6 +37,7 @@ module RailsTwirp
     include AbstractController::Callbacks
     include Rescue
     include Instrumentation
+    include ExceptionHandling
 
     attr_internal :request, :env, :response_class, :rpc_name
     def initialize
