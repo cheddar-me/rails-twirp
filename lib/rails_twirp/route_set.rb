@@ -29,6 +29,8 @@ module RailsTwirp
 
       def initialize(service_class)
         @service_class = service_class
+        @service_class.raise_exceptions = true
+
         @rpcs = {}
       end
 
