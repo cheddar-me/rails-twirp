@@ -48,10 +48,9 @@ class PingControllerTest < RailsTwirp::IntegrationTest
 
   test "uncaught errors should bubble up to the test" do
     req = RPC::DummyAPI::PingRequest.new
-    rpc RPC::DummyAPI::DummyService, "UncaughtError", req
-    assert_instance_of Twirp::Error, response
-    assert_equal "Uncaught", response.msg
-    assert_equal :internal, response.code
+    assert_raises StandardError, "Uncaught" do
+      rpc RPC::DummyAPI::DummyService, "UncaughtError", req
+    end
   end
 
   test "before error" do
