@@ -13,6 +13,6 @@ Gem::Specification.new do |spec|
   spec.test_files = `git ls-files -- test/*`.split("\n")
 
   spec.add_dependency "rails", ">= 6.1.3"
-  spec.add_dependency "twirp", "~> 1.7.2"
+  spec.add_dependency "twirp", ">= 1.7.2", "~> 1.9.0"
   spec.required_ruby_version = ">= 3"
 end
