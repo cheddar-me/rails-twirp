@@ -1,0 +1,12 @@
+version: 2
+updates:
+  - package-ecosystem: "bundler"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+
+  - package-ecosystem: "github-actions"
+    # Checks for workflow files stored in the default location of `.github/workflows`
+    directory: "/"
+    schedule:
+      interval: "weekly"
