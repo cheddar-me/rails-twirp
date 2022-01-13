@@ -66,6 +66,24 @@ class PingControllerTest < RailsTwirp::IntegrationTest
     Rails.application.env_config["action_dispatch.show_exceptions"] = false
   end
 
+  test "uncaught errors should be fanned out to the exception handler proc if one is defined" do
+    Rails.application.env_config["action_dispatch.show_exceptions"] = true
+
+    captured_exception = nil
+    RailsTwirp.unhandled_exception_handler = ->(e) { captured_exception = e }
+
+    req = RPC::DummyAPI::PingRequest.new
+    rpc RPC::DummyAPI::DummyService, "UncaughtError", req
+    assert_instance_of Twirp::Error, response
+    assert_equal :internal, response.code
+    assert_equal "Uncaught", response.msg
+    assert_equal "StandardError", response.meta["cause"]
+    assert_kind_of StandardError, captured_exception
+  ensure
+    RailsTwirp.unhandled_exception_handler = nil
+    Rails.application.env_config["action_dispatch.show_exceptions"] = false
+  end
+
   test "uncaught errors should return an internal error without if show_exceptions is true and show_detailed_exceptions is false" do
     Rails.application.env_config["action_dispatch.show_exceptions"] = true
     Rails.application.env_config["action_dispatch.show_detailed_exceptions"] = false
