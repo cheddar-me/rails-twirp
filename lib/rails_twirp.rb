@@ -8,6 +8,7 @@ require "rails_twirp/log_subscriber"
 
 module RailsTwirp
   mattr_accessor :test_app
+  mattr_accessor :unhandled_exception_handler
 end
 
 require "rails_twirp/engine" if defined?(Rails)
