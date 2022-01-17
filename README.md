@@ -1,6 +1,6 @@
 # RailsTwirp
 
-allows for effortless integration of [Twirp](https://github.com/twitchtv/twirp) endpoints into your Rails application. RailsTwirp permits you to define your Twirp endpoints using the familiar vocabulary of Rails routes, controllers, actions and views.
+Allows for effortless integration of [Twirp](https://github.com/twitchtv/twirp) endpoints into your Rails application. RailsTwirp permits you to define your Twirp endpoints using the familiar vocabulary of Rails routes, controllers, actions and views.
 
 Using an extra routes file you map your Twirp RPCs to controllers, and define your views using [pbbuilder.](https://github.com/cheddar-me/pbbuilder) Even though you are now serving Twirp RPC endpoints instead of HTML or JSON, all the skills and tools you have for working your usual Rails infrastructure apply. `TwirpRails` provides a customised controller superclass called `RailsTwirp::Base` which includes all the relevant ActionController components which still make sense when using Protobufs.
 
