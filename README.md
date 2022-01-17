@@ -11,7 +11,6 @@ Add the gem to your project (see "Installation" below). Then add a file called `
 ```ruby
 Rails.application.twirp.routes.draw do
   service HelloService, module: :api do
-    # RegisterClient register a device and returns its ID
     rpc "GreetWorld", to: "greetings#greet"
   end
 end
