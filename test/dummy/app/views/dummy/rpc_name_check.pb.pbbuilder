@@ -1,1 +1,4 @@
-pb.rpc_name @rpc_name
+pb.cache! "rpc-#{@rpc_name}", expire_in: 1.minute do
+	pb.rpc_name @rpc_name
+end
+	

@@ -1,10 +1,11 @@
+# frozen_string_literal: true
+
 require "abstract_controller/base"
 require "abstract_controller/rendering"
 require "action_view/rendering"
 require "rails_twirp/render_pb"
 require "rails_twirp/errors"
 require "abstract_controller/asset_paths"
-require "abstract_controller/caching"
 require "abstract_controller/logger"
 require "abstract_controller/callbacks"
 require "action_controller/metal/helpers"
@@ -13,11 +14,10 @@ require "rails_twirp/url_for"
 require "rails_twirp/implicit_render"
 require "rails_twirp/instrumentation"
 require "rails_twirp/exception_handling"
+require "rails_twirp/metal"
 
 module RailsTwirp
-  class Base < AbstractController::Base
-    abstract!
-
+  class Base < RailsTwirp::Metal
     # The order of these includes matter.
     # The rendering modules extend each other, so need to be in this order.
     include AbstractController::Rendering
@@ -26,7 +26,6 @@ module RailsTwirp
     include ActionController::Helpers
     include UrlFor
     include AbstractController::AssetPaths
-    include AbstractController::Caching
 
     include ActionView::Rendering
     include RenderPb

@@ -4,7 +4,7 @@ source "https://rubygems.org"
 gemspec
 
 gem "sqlite3"
-gem "pbbuilder", "~> 0.12.0"
+gem "pbbuilder"
 gem "standard"
 gem "pry"
 
