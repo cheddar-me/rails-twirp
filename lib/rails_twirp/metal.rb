@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module RailsTwirp
-  # This is a simplest possible controller, providiing a valid
-  # Rack interfacee witout the additional niceties provided by RailsTwirp.
+  # This is a simplest possible controller, providing a valid
+  # Rack interfacee without the additional niceties provided by RailsTwirp.
   #
   # Idiologially, it's similar to Rails version of ActionController::Metal
   class Metal < AbstractController::Base
