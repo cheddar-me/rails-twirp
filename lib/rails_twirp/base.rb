@@ -38,7 +38,14 @@ module RailsTwirp
     include Instrumentation
     include ExceptionHandling
 
-    attr_internal :request, :env, :response_class, :rpc_name
+    ##
+    # :attr_reader: request
+    #
+    # The ActionDispatch::Request instance for the current request.
+    attr_internal :request
+
+    attr_internal :env, :response_class, :rpc_name
+
     def initialize
       @_request = nil
       @_env = nil
