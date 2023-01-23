@@ -34,7 +34,11 @@ module RailsTwirp
 
     initializer "rails_twirp.helpers" do |app|
       ActiveSupport.on_load(:rails_twirp) do
-        # Load all the application helpers into the controller
+        # Load all the application helpers into the controller.
+        # Note that helpers need to be set up here, because apparently
+        # the AbstractController::Helpers module won't be able to find
+        # the _helpers method on a reloaded controller
+        include ActionController::Caching
         include app.routes.mounted_helpers
         extend ::AbstractController::Railties::RoutesHelpers.with(app.routes, false)
         extend ::ActionController::Railties::Helpers

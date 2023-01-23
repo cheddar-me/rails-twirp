@@ -8,12 +8,6 @@ module RailsTwirp
   class Metal < AbstractController::Base
     abstract!
 
-    include AbstractController::Helpers
-
-    helper_method :view_cache_dependencies
-
-    include ActionController::Caching
-
     # Returns the last part of the controller's name, underscored, without the ending
     # <tt>Controller</tt>. For instance, PostsController returns <tt>posts</tt>.
     # Namespaces are left out, so Admin::PostsController returns <tt>posts</tt> as well.
