@@ -10,7 +10,6 @@ Gem::Specification.new do |spec|
   spec.license = "MIT"
 
   spec.files = `git ls-files`.split("\n")
-  spec.test_files = `git ls-files -- test/*`.split("\n")
 
   spec.add_dependency "rails", ">= 6.1.3"
   spec.add_dependency "twirp", ">= 1.7.2", "~> 1.9.0"

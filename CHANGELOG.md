@@ -1,3 +1,8 @@
+### 0.13.0
+* Adding #controller_name methods to Metal/Base controller (used for instrumentation)
+* Include `ActionController::Caching` with Base controller/helpers
+
+
 ### 0.12.0
 
 * Allow a custom exception handling proc to be assigned using `RailsTwirp.unhandled_exception_handler`
