@@ -9,7 +9,9 @@ Gem::Specification.new do |spec|
   spec.summary = "Integrate Twirp into Rails"
   spec.license = "MIT"
 
-  spec.add_dependency "rails", ">= 7"
+  spec.files = `git ls-files`.split("\n")
+
+  spec.add_dependency "rails", ">= 6.1.3"
   spec.add_dependency "twirp", ">= 1.7.2", "~> 1.9.0"
   spec.required_ruby_version = ">= 3"
 end
