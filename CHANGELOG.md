@@ -1,6 +1,5 @@
 ### 0.13.1
 * Don't include `test/` folder in a final gem distribution
-* Modify standard to format dummy app as well
 
 ### 0.13.0
 * Adding #controller_name methods to Metal/Base controller (used for instrumentation)
