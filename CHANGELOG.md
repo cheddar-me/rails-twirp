@@ -1,4 +1,7 @@
 ### 0.13.0
+* loosen twirp dependency
+
+### 0.13.0
 * Adding #controller_name methods to Metal/Base controller (used for instrumentation)
 * Include `ActionController::Caching` with Base controller/helpers
 
