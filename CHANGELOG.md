@@ -1,3 +1,6 @@
+### 0.13.2
+* revert - include `test/` folder in a final gem distribution
+
 ### 0.13.1
 * Don't include `test/` folder in a final gem distribution
 * Format dummy app code with standardrb
