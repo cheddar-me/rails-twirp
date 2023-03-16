@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "rails_twirp/application"
 require "rails_twirp/route_set"
 require "rails/railtie"

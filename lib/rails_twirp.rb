@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "rails_twirp/version"
 
 require "rails_twirp/application"

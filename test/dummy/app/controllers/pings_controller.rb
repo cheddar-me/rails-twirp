@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PingsController < ApplicationTwirpController
   before_action :respond_error, only: :before_error
 

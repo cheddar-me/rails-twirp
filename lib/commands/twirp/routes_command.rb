@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module RailsTwirp
   module Command
     class RoutesCommand < Rails::Command::Base
