@@ -1,3 +1,6 @@
+### 0.14.0
+* Adding frozen_string_literal: true to all files.
+
 ### 0.13.2
 * revert - include `test/` folder in a final gem distribution
 
