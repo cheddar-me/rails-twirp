@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module RailsTwirp
   # RenderPb makes it possible to do 'render pb: <proto object>', skipping templates
   # The way this module is written is inspired by ActionController::Renderers

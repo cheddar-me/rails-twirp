@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module RailsTwirp
   module Rescue
     extend ActiveSupport::Concern

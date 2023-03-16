@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative "../../proto/api_twirp"
 
 Rails.application.twirp.routes.draw do

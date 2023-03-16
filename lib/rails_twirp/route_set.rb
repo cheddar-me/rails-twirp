@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Most of this logic is stolen from Rails ActionDispatch::Routing::RouteSet
 
 require "rails_twirp/mapper"
