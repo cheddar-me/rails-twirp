@@ -100,6 +100,25 @@ class PingControllerTest < RailsTwirp::IntegrationTest
     Rails.application.env_config["action_dispatch.show_exceptions"] = false
   end
 
+  test "decorates Twirp errors resulting from unhandled exceptions if the controller provides for it" do
+    Rails.application.env_config["action_dispatch.show_exceptions"] = true
+    Rails.application.env_config["action_dispatch.show_detailed_exceptions"] = false
+
+    PingsController.define_method(:decorate_twirp_error_response!)do
+      self.response_body.meta[:encrypted] = "abc"
+    end
+
+    req = RPC::DummyAPI::PingRequest.new
+    rpc RPC::DummyAPI::DummyService, "UncaughtError", req
+    assert_instance_of Twirp::Error, response
+    assert_equal :internal, response.code
+    assert_equal "Internal error", response.msg
+    assert_equal "abc", response.meta["encrypted"]
+  ensure
+    Rails.application.env_config["action_dispatch.show_detailed_exceptions"] = true
+    Rails.application.env_config["action_dispatch.show_exceptions"] = false
+  end
+
   test "before error" do
     req = RPC::DummyAPI::PingRequest.new
     rpc RPC::DummyAPI::DummyService, "BeforeError", req
