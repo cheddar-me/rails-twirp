@@ -10,7 +10,7 @@ module RailsTwirp
 
     def process_action(*)
       super
-    rescue StandardError => e
+    rescue Exception => e
       # Only the exceptions which are not captured by ActionController-like "rescue_from" end up here.
       # The idea is that any exception which is rescued by the controller is treated as part of the business
       # logic, and thus taking action on it is the responsibility of the controller which uses "rescue_from".
@@ -24,6 +24,11 @@ module RailsTwirp
 
       # 2. We report the error to the error tracking service, this needs to be configured.
       RailsTwirp.unhandled_exception_handler&.call(e)
+
+      # 2b. If the error is very severe (not a StandardError but something like ENOMEM,
+      # process termination, kill signal...) just re-raise it. These exceptions should never
+      # be swallowed.
+      raise e unless e.is_a?(StandardError)
 
       # 3. When we want to show detailed exceptions we include the exception message in the error
       if http_request.get_header("action_dispatch.show_detailed_exceptions")
