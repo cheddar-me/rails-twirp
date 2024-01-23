@@ -10,7 +10,7 @@ module RailsTwirp
 
     def process_action(*)
       super
-    rescue Exception => e
+    rescue StandardError => e
       # Only the exceptions which are not captured by ActionController-like "rescue_from" end up here.
       # The idea is that any exception which is rescued by the controller is treated as part of the business
       # logic, and thus taking action on it is the responsibility of the controller which uses "rescue_from".
