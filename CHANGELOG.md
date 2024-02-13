@@ -1,3 +1,7 @@
+### 0.15.0
+
+* Fix decode_rack_response to be compatible with Rack response body wrappers (and conform to the Rack SPEC)
+
 ### 0.14.0
 * Adding frozen_string_literal: true to all files.
 

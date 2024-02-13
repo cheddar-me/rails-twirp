@@ -91,7 +91,7 @@ module RailsTwirp
     end
 
     def decode_rack_response(service, rpc, status, headers, body)
-      body = body.join # body is an Enumerable
+      body = Array.wrap(body).join # body is each-able
 
       if status === 200
         output_class = service.rpcs[rpc][:output_class]
