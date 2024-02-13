@@ -59,10 +59,10 @@ module RailsTwirp
       @module = nil
     end
 
-    def service(service_definition, **options, &block)
+    def service(service_definition, **, &block)
       service_route_set = @route_set.services[service_definition]
       service_mapper = ServiceMapper.new(service_route_set, self)
-      scope(**options) { service_mapper.instance_exec(&block) }
+      scope(**) { service_mapper.instance_exec(&block) }
     end
 
     def scope(**options)
