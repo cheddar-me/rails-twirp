@@ -1,5 +1,6 @@
 ### 0.15.0
 
+* Exclude versions of Rails 7 which were incompatible with the pbbuilder ActionView handler, as pbbuilder cannot work there at all
 * Fix decode_rack_response to be compatible with Rack response body wrappers (and conform to the Rack SPEC)
 
 ### 0.14.0
