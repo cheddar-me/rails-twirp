@@ -91,14 +91,17 @@ module RailsTwirp
     end
 
     def decode_rack_response(service, rpc, status, headers, body)
-      body = Array.wrap(body).join # body is each-able
+      body_bytes = StringIO.new("".b)
+      body.each {|b| body_bytes << b }
 
       if status === 200
         output_class = service.rpcs[rpc][:output_class]
-        Twirp::Encoding.decode(body, output_class, headers["Content-Type"])
+        Twirp::Encoding.decode(body_bytes.string, output_class, headers["Content-Type"])
       else
-        Twirp::Client.error_from_response(Response.new(status, body, headers))
+        Twirp::Client.error_from_response(Response.new(status, body_bytes.string, headers))
       end
+    ensure
+      body.close if body.respond_to?(:close) # Comply with Rack API
     end
 
     def set_controller_from_rack_env(env)
