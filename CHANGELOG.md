@@ -1,9 +1,13 @@
-### 0.15.0
+### 0.16
+
+* Ensure `decode_rack_response` always calls `#close` on the Rack body in tests, as some middleware might be applying a BodyProxy
+
+### 0.15
 
 * Exclude versions of Rails 7 which were incompatible with the pbbuilder ActionView handler, as pbbuilder cannot work there at all
 * Fix decode_rack_response to be compatible with Rack response body wrappers (and conform to the Rack SPEC)
 
-### 0.14.0
+### 0.14
 * Adding frozen_string_literal: true to all files.
 
 ### 0.13.2
@@ -18,14 +22,14 @@
 * Include `ActionController::Caching` with Base controller/helpers
 
 
-### 0.12.0
+### 0.12
 
 * Allow a custom exception handling proc to be assigned using `RailsTwirp.unhandled_exception_handler`
 
-### 0.11.0
+### 0.11
 
 * Update configuration and tests for Rails 7 compatibility
 
-### 0.10.0
+### 0.10
 
 * Handle exceptions more like the Rails controllers do it, do not capture all of them as if they were Twirp exceptions
