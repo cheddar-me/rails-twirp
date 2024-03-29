@@ -10,6 +10,7 @@ module RailsTwirp
     def process_action(*)
       super
     rescue Exception => exception
+      
       rescue_with_handler(exception) || raise
     end
   end

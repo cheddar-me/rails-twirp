@@ -92,7 +92,7 @@ module RailsTwirp
 
     def decode_rack_response(service, rpc, status, headers, body)
       body_bytes = StringIO.new("".b)
-      body.each {|b| body_bytes << b }
+      body.each { |b| body_bytes << b }
 
       if status === 200
         output_class = service.rpcs[rpc][:output_class]
