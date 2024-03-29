@@ -1,6 +1,6 @@
 ### 0.16
 
-* Fix decode_rack_response to be close the Rack body if it needs closing
+* Ensure `decode_rack_response` always calls `#close` on the Rack body in tests, as some middleware might be applying a BodyProxy
 
 ### 0.15
 
