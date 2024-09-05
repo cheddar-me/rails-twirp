@@ -20,7 +20,7 @@ module RailsTwirp
       # 1. When we 'show exceptions' we make the exception bubble up—this is useful for testing
       #    If the exception gets raised here error reporting will happen in the middleware of the APM package
       #    higher in the call stack.
-      raise e unless http_request.show_exceptions?
+      raise e unless http_request.get_header("action_dispatch.show_exceptions")
 
       # 2. We report the error to the error tracking service, this needs to be configured.
       RailsTwirp.unhandled_exception_handler&.call(e)

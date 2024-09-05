@@ -13,10 +13,9 @@ Gem::Specification.new do |spec|
 
   spec.files = `git ls-files`.split("\n")
 
-  # Rails has shipped an incompatible change in ActiveView, that was reverted in later versions
-  # but at this time has not been released as a 7.x version
-  # @see https://github.com/rails/rails/pull/51023
-  spec.add_runtime_dependency "rails", ">= 6.1.3", " < 7.1"
-  spec.add_runtime_dependency "twirp", ">= 1.9", "< 1.11"
+  spec.add_runtime_dependency "rails", ">= 6.1.3", "!= 7.1"
+  spec.add_runtime_dependency "twirp", ">= 1.9"
+  spec.add_development_dependency "pry"
+
   spec.required_ruby_version = ">= 3"
 end
