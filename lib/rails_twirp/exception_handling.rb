@@ -20,7 +20,17 @@ module RailsTwirp
       # 1. When we 'show exceptions' we make the exception bubble up—this is useful for testing
       #    If the exception gets raised here error reporting will happen in the middleware of the APM package
       #    higher in the call stack.
-      raise e unless http_request.get_header("action_dispatch.show_exceptions")
+      #
+
+      # A backtrace cleaner acts like a filter that only shows us the backtrace
+      # with usefull lines compared to all lines the code goes through.
+      backtrace_cleaner = http_request.get_header("action_dispatch.backtrace_cleaner")
+
+      # Contians various exception related methods we can use and takes the backtrace_cleaner into consideration
+      exception_wrapper = ActionDispatch::ExceptionWrapper.new(backtrace_cleaner, e)
+      # ExceptionWrapper.show? contains the logic that chooses to pass exceptions through or not based on the
+      # `action_dispatch.show_exceptions` config settings of :none, :rescuable and :all
+      raise e unless exception_wrapper.show?(http_request)
 
       # 2. We report the error to the error tracking service, this needs to be configured.
       RailsTwirp.unhandled_exception_handler&.call(e)
