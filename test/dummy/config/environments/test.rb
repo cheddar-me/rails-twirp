@@ -28,8 +28,12 @@ Rails.application.configure do
   config.action_controller.perform_caching = false
   config.cache_store = :null_store
 
-  # Raise exceptions instead of rendering exception templates.
-  config.action_dispatch.show_exceptions = :all
+  # Set to one of the following (default is :all):
+  #
+  # :all - render error pages for all exceptions
+  # :rescuable - render error pages for exceptions declared by config.action_dispatch.rescue_responses
+  # :none - raise all exceptions
+  config.action_dispatch.show_exceptions = :none
 
   # Disable request forgery protection in test environment.
   config.action_controller.allow_forgery_protection = false
