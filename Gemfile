@@ -8,7 +8,6 @@ gemspec
 gem "sqlite3"
 gem "pbbuilder"
 gem "standard"
-gem "pry"
 
 # HACK(bouk): Overwrite Bundler's platform matcher to ignore universal CPU
 # The protobuf and gRPC 'universal' macOS gems break on M1
