@@ -49,14 +49,16 @@ class PingControllerTest < RailsTwirp::IntegrationTest
   end
 
   test "uncaught errors should bubble up to the test" do
+    Rails.application.env_config["action_dispatch.show_exceptions"] = :none
+
     req = RPC::DummyAPI::PingRequest.new
     assert_raises StandardError, "Uncaught" do
       rpc RPC::DummyAPI::DummyService, "UncaughtError", req
     end
   end
 
-  test "uncaught errors should return an internal error with details if show_exceptions is true" do
-    Rails.application.env_config["action_dispatch.show_exceptions"] = true
+  test "uncaught errors should return an internal error with details if show_exceptions is all" do
+    Rails.application.env_config["action_dispatch.show_exceptions"] = :all
 
     req = RPC::DummyAPI::PingRequest.new
     rpc RPC::DummyAPI::DummyService, "UncaughtError", req
@@ -64,12 +66,10 @@ class PingControllerTest < RailsTwirp::IntegrationTest
     assert_equal :internal, response.code
     assert_equal "Uncaught", response.msg
     assert_equal "StandardError", response.meta["cause"]
-  ensure
-    Rails.application.env_config["action_dispatch.show_exceptions"] = false
   end
 
   test "uncaught errors should be fanned out to the exception handler proc if one is defined" do
-    Rails.application.env_config["action_dispatch.show_exceptions"] = true
+    Rails.application.env_config["action_dispatch.show_exceptions"] = :all
 
     captured_exception = nil
     RailsTwirp.unhandled_exception_handler = ->(e) { captured_exception = e }
@@ -83,11 +83,10 @@ class PingControllerTest < RailsTwirp::IntegrationTest
     assert_kind_of StandardError, captured_exception
   ensure
     RailsTwirp.unhandled_exception_handler = nil
-    Rails.application.env_config["action_dispatch.show_exceptions"] = false
   end
 
   test "uncaught errors should return an internal error without if show_exceptions is true and show_detailed_exceptions is false" do
-    Rails.application.env_config["action_dispatch.show_exceptions"] = true
+    Rails.application.env_config["action_dispatch.show_exceptions"] = :all
     Rails.application.env_config["action_dispatch.show_detailed_exceptions"] = false
 
     req = RPC::DummyAPI::PingRequest.new
@@ -97,7 +96,6 @@ class PingControllerTest < RailsTwirp::IntegrationTest
     assert_equal "Internal error", response.msg
   ensure
     Rails.application.env_config["action_dispatch.show_detailed_exceptions"] = true
-    Rails.application.env_config["action_dispatch.show_exceptions"] = false
   end
 
   test "before error" do
