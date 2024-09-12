@@ -6,7 +6,7 @@ source "https://rubygems.org"
 gemspec
 
 gem "sqlite3"
-gem "pbbuilder", github: "cheddar-me/pbbuilder", branch: "use-system-basic-object"
+gem "pbbuilder"
 gem "standard"
 gem "pry"
 
